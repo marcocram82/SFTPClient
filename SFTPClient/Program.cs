@@ -15,7 +15,7 @@ namespace SFTPClient
             
             String conn = linhas[0];
             String db = linhas[1];
-            string backupfile = linhas[2];
+            string backupfile = linhas[2]; 
             string SFTPuser = linhas[3];
             string SFTPpass = linhas[4];
             string SFTPhost = linhas[5];
