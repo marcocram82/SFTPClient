@@ -20,14 +20,31 @@ namespace SFTPClient
             string SFTPpass = linhas[4];
             string SFTPhost = linhas[5];
             string SFTPpath = linhas[6];
+            string remoteFile = backupfile;
 
             ProcessDB(db, conn);
 
-            string path = String.Concat(Environment.CurrentDirectory, "\\", backupfile);
+            string path = "";
+
+
+            if (linhas.Length == 7)
+                path = String.Concat(Environment.CurrentDirectory, "\\", backupfile);
+            else
+                path = linhas[7];
 
             CreateBackup(db, path, conn);
 
-            SFTPClient.SendFileToServer.Send(backupfile, SFTPhost, SFTPuser, SFTPpass,SFTPpath);
+            if (linhas.Length == 9 && linhas[8].Length > 3)
+            {
+                remoteFile = backupfile;
+                backupfile = linhas[8];
+            }
+            else
+                remoteFile = backupfile;
+
+
+
+            SFTPClient.SendFileToServer.Send(backupfile, SFTPhost, SFTPuser, SFTPpass,SFTPpath, remoteFile);
         }
 
         static void ProcessDB(string DBName,string connString)

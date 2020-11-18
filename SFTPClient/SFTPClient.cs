@@ -7,10 +7,11 @@ namespace SFTPClient
 {
     public static class SendFileToServer
     {
-        public static int Send(string fileName,string host,string user,string pass,string remotePath)
+        public static int Send(string fileName,string host,string user,string pass,string remotePath,string remoteFile)
         {
             var connectionInfo = new ConnectionInfo(host, user, new PasswordAuthenticationMethod(user, pass));
             // Upload File
+
             using (var sftp = new SftpClient(connectionInfo))
             {
 
@@ -20,7 +21,7 @@ namespace SFTPClient
                 //sftp.ChangeDirectory("/MyFolder");
                 using (var uplfileStream = System.IO.File.OpenRead(fileName))
                 {
-                    sftp.UploadFile(uplfileStream, fileName, true);
+                    sftp.UploadFile(uplfileStream, remoteFile, true);
                 }
                 sftp.Disconnect();
             }
